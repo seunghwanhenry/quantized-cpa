@@ -2,11 +2,21 @@
 
 Code accompanying *"Quantization-aware minimum-variance performance assessment of coarsely logged control loops"* (S. Song and J. Lee, submitted to Control Engineering Practice).
 
-## Contents
-- `qcpa.py` — standard, Sheppard-corrected and polychoric minimum-variance indices; constrained autoregressive fit; reliability diagnostics (Algorithm 1); closed-form ceiling (Corollary 1).
-- `simulation.py` — Monte Carlo study (Section 5, Table 3, Figs. 2–3).
-- `record_length_nlen.py`, `record_length_rules.py` — record-length and order-rule study (Section 5.4, Fig. 4).
-- `benchmark.py` — re-quantization benchmark on 82 public industrial loops (Section 6, Table 5, Fig. 6). Downloads the public data into `data/` on first run.
+## Library
+- `qcpa.py` — quantizer, open-ended discretized-normal marginal fit, lag-wise polychoric autocorrelation, constrained (partial-autocorrelation) AR fit with multi-start option, minimum-variance index, order rule (Eq. 7), Sheppard correction, and `corrected_index_v2` implementing Algorithm 1 (switching-rate and order-stability diagnostics).
+- `common.py` — loop simulators (Sections 5.1 and 5.5) and loader for the public industrial data.
+
+## Scripts reproducing the results
+| Script | Paper | Approx. single-core time |
+|---|---|---|
+| `simulation.py` | Section 5.2–5.3, Table 3, Figs. 2–3 | ~10 min |
+| `record_length.py` | Section 5.4, Fig. 4 | ~10 min |
+| `controlled.py` | Section 5.5, Table 4, Fig. 5 | ~2 min |
+| `benchmark.py` | Section 6.2, Table 5, Fig. 6 | ~3 min |
+| `diagnostics.py` | Section 6.3, Table 6 (overall and by resolution ratio) | ~15 min |
+| `bootstrap_coverage.py` | Section 4 (bootstrap coverage) | ~10 min |
+
+`benchmark.py` and `diagnostics.py` download the public data into `data/` on first run; their results are reproduced exactly. The simulation scripts reproduce the reported values up to Monte Carlo error.
 
 ## Quick use
 ```python
@@ -25,8 +35,9 @@ res['latent_acf']   # latent (polychoric) autocorrelation, always returned
 ## Reproduce
 ```bash
 pip install -r requirements.txt
-python simulation.py
 python benchmark.py
+python diagnostics.py
+python simulation.py
 ```
 
 ## License
