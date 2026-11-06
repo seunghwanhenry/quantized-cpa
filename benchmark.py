@@ -5,7 +5,7 @@ Run:  python scripts/benchmark.py   (downloads both repositories on first use)
 import os, sys, glob, io, zipfile, urllib.request, numpy as np, pandas as pd
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 from qcpa import quantize, acf, harris_from_r, sheppard_index, polychoric_index
-DATA = os.path.join(os.path.dirname(__file__), '..', 'data')
+DATA = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
 REPOS = {'StictionGPT': 'https://codeload.github.com/TerenceXue-tech/StictionGPT/zip/HEAD',
          'damarla': 'https://codeload.github.com/seshu-damarla/control-valve-stiction/zip/HEAD'}
 
